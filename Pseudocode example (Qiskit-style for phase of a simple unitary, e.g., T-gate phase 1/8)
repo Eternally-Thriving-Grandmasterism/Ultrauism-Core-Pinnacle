@@ -1,0 +1,36 @@
+from qiskit import QuantumCircuit, transpile
+from qiskit_aer import AerSimulator
+
+t = 8  # Precision bits
+qc = QuantumCircuit(t + 1, t)  # +1 system qubit
+
+# Initial eigenvector (e.g., |1> for T-gate)
+qc.x(t)
+
+# Superposition on counting
+qc.h(range(t))
+
+# Controlled powers of U (here U = T-gate on system qubit)
+for control in range(t):
+    for _ in range(2**control):  # U^{2^control}
+        qc.cp(np.pi/4, control, t)  # Phase kick for T = P(pi/4)
+
+# Inverse QFT on counting
+def inverse_qft(qc, n):
+    for qubit in range(n//2):
+        qc.swap(qubit, n-qubit-1)
+    for j in range(n):
+        for m in range(j):
+            qc.cp(-np.pi/float(2**(j-m)), m, j)
+        qc.h(j)
+
+inverse_qft(qc, t)
+
+qc.measure(range(t), range(t))
+
+sim = AerSimulator()
+job = sim.run(transpile(qc, sim), shots=1024)
+result = job.result().get_counts()
+most_likely = max(result, key=result.get)
+phase_est = int(most_likely, 2) / 2**t
+print("Estimated phase:", phase_est)  # ~0.125 for 1/8
