@@ -1,0 +1,7 @@
+streamlit
+matplotlib
+numpy
+pennylane
+gymnasium
+networkx
+qutip  # If used in some visualizers
