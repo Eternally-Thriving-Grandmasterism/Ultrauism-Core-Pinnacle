@@ -1,0 +1,18 @@
+pool = generate_pool()  # e.g., singles/doubles excitations
+state = initial_state()  # Hartree-Fock
+parameters = []
+
+while True:
+    gradients = compute_gradients(state, pool, parameters)
+    max_grad_idx = argmax(|gradients|)
+    if |gradients[max_grad_idx]| < threshold:
+        break
+    
+    # Add selected operator
+    pool_selected = pool.pop(max_grad_idx)
+    parameters.append(0.0)  # Initial tau=0
+    
+    # Optimize all parameters
+    parameters = classical_optimize(energy_function(state, pool_selected, parameters))
+
+final_energy = energy(state, parameters)
