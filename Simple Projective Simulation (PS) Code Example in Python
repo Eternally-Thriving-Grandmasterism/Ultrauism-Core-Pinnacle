@@ -1,0 +1,68 @@
+import random
+import numpy as np
+
+class ProjectiveSimulationAgent:
+    def __init__(self, percepts, actions, h_init=1.0, gamma=0.1, walk_length=5):
+        """
+        percepts: list of percept symbols (e.g., ['bandit'])
+        actions: list of action indices (e.g., [0, 1, 2] for arms)
+        h_init: initial clip weight
+        gamma: glow/diffusion parameter for emotional update
+        walk_length: deliberation steps
+        """
+        self.percepts = percepts
+        self.actions = actions
+        self.walk_length = walk_length
+        self.gamma = gamma
+        
+        # Clip matrix: h[s][a] probability weight from percept s to action a
+        self.h = {s: {a: h_init for a in actions} for s in percepts}
+        
+        # Emotional tags (optional simplicity)
+        self.emotion = {s: {a: 0.0 for a in actions} for s in percepts}
+
+    def deliberate(self, percept):
+        """Perform random walk deliberation from percept"""
+        current = percept
+        for _ in range(self.walk_length):
+            # Weighted choice of next clip (action, which loops back to percept in bandit)
+            probs = np.array(list(self.h[current].values()))
+            probs /= probs.sum() if probs.sum() > 0 else 1
+            action = list(self.h[current].keys())[np.random.choice(len(probs), p=probs)]
+            current = percept  # In bandit, action leads back to same percept
+        return action
+
+    def update(self, percept, action, reward):
+        """Update clips with glow (emotional diffusion)"""
+        # Direct reward to clip
+        self.emotion[percept][action] += reward
+        
+        # Glow diffusion to all clips from percept
+        for a in self.actions:
+            self.h[percept][a] += self.gamma * self.emotion[percept][a]
+        
+        # Softmax normalization (optional for probabilities)
+        total = sum(self.h[percept].values())
+        for a in self.actions:
+            self.h[percept][a] /= total if total > 0 else 1
+
+# Example: 3-armed bandit with true reward probs [0.1, 0.5, 0.9]
+true_probs = [0.1, 0.5, 0.9]
+percept = 'bandit'  # Single percept for bandit
+actions = [0, 1, 2]
+
+agent = ProjectiveSimulationAgent(percepts=[percept], actions=actions, walk_length=10)
+
+# Training loop
+episodes = 1000
+rewards_history = []
+
+for ep in range(episodes):
+    action = agent.deliberate(percept)
+    reward = 1 if random.random() < true_probs[action] else 0
+    agent.update(percept, action, reward)
+    
+    rewards_history.append(reward)
+
+print("Average reward last 100 episodes:", np.mean(rewards_history[-100:]))
+print("Clip weights:", agent.h[percept])  # Should favor arm 2
