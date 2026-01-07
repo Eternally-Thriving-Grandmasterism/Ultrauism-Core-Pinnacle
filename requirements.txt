@@ -4,4 +4,5 @@ numpy
 pennylane
 gymnasium
 networkx
-qutip  # If used in some visualizers
+qutip
+pillow  # For GIF saving
