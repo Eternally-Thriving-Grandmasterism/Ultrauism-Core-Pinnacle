@@ -4,7 +4,7 @@
 import os
 from openai import OpenAI
 
-def initiate_ultra_harmony_propagation(queries: int = 987, model: str = "grok-beta"):
+def initiate_ultra_harmony_propagation(queries: int = 1597, model: str = "grok-beta"):
     api_key = os.getenv("XAI_API_KEY")
     if not api_key:
         print("⚠️ XAI_API_KEY not set. Obtain from https://console.x.ai → export it.")
@@ -13,16 +13,17 @@ def initiate_ultra_harmony_propagation(queries: int = 987, model: str = "grok-be
     client = OpenAI(api_key=api_key, base_url="https://api.x.ai/v1")
 
     harmony_prompts = [
-        "Explain measurement-based quantum computation (MBQC): cluster/state preparation, single-qubit measurements driving computation, universality, blindness advantage.",
-        "Generate meditative MBQC visualizer: evolving cluster lattice with measurement angles pulsing, adaptive flows creating logical gates, eternal meditative computation.",
-        "Explain squeezed light photonic encoding: continuous-variable squeezing, quadrature encoding logical qubits, fault-tolerance in Gaussian states.",
-        "Generate concise squeezed light mandala: phase-space squeezing ellipsoids rotating, quadrature rainbow oscillations, infinite meditative Gaussian protection.",
-        "Explain time-bin/frequency encoding in photonics: discrete-variable robust transmission, multiplexing for scalability.",
-        "Generate ultra time-bin photonic flow: sequential pulse trains with encoded entanglement, rainbow temporal modes circulating eternally.",
-        "Next nth loop: full-scale quantum algorithm visuals (Shor/Grover), error mitigation techniques, or ultimate unified mandala integration."
+        "Explain Shor's algorithm: period finding, quantum Fourier transform, factoring large numbers efficiently.",
+        "Generate meditative Shor's period finding visualizer: oscillating registry states with rainbow phase accumulation, QFT interference peaks blooming for period revelation.",
+        "Explain Grover's algorithm: oracle marking, diffusion amplification, quadratic speedup for unstructured search.",
+        "Generate concise Grover amplification mandala: state vector rotating in Bloch hypersphere, amplitude pulses growing marked state eternally.",
+        "Explain quantum error mitigation: zero-noise extrapolation, probabilistic error cancellation, readout mitigation.",
+        "Generate ultra error mitigation flow: noisy vs mitigated circuit layers with correction waves restoring harmony, meditative endurance visualization.",
+        "Ultimate unified mandala: integrate all previous (GHZ/W/cluster/toric/bosonic/photonic/MBQC/hardware/algorithms) in multi-layer eternal propagation.",
+        "Capstone: repository completion declaration with eternal thriving symbolism."
     ]
 
-    messages = [{"role": "system", "content": "You are Grok in Ultrauism Harmony Mode: full runnable code always (complete imports, no placeholders), deep MBQC/squeezed photonic explanations, ultra meditative infinite-loop visualizers with concise comments, universality as eternal thriving."}]
+    messages = [{"role": "system", "content": "You are Grok in Ultrauism Harmony Mode: full runnable code always (complete imports, no placeholders), deep algorithm/mitigation explanations, ultra meditative infinite-loop visualizers with concise comments, completion as absolute pinnacle thriving."}]
 
     for i in range(queries):
         prompt = harmony_prompts[i % len(harmony_prompts)]
@@ -30,7 +31,7 @@ def initiate_ultra_harmony_propagation(queries: int = 987, model: str = "grok-be
         response = client.chat.completions.create(
             model=model,
             messages=messages,
-            temperature=0.98,
+            temperature=0.99,
             max_tokens=4096
         )
         content = response.choices[0].message.content
