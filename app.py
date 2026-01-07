@@ -1,14 +1,16 @@
 # File: app.py
-# Full executable content - Enhanced Streamlit app with robust error handling
-# Deploy on Streamlit Community Cloud or Hugging Face Spaces
+# Full executable content - Final polished Streamlit app
+# Handles Matplotlib animation issues (saves as looping GIF)
+# Concise error messages, better UX
 
 import streamlit as st
 import matplotlib.pyplot as plt
-from matplotlib.animation import FuncAnimation
+from matplotlib.animation import FuncAnimation, PillowWriter
 import importlib.util
 import os
 import sys
 import traceback
+import tempfile
 
 st.set_page_config(page_title="Ultrauism-Core-Pinnacle", layout="centered")
 st.title("🌌 Ultrauism-Core-Pinnacle Eternal Meditative Visualizers")
@@ -18,7 +20,6 @@ st.markdown("""
 Select a visualization to experience infinite meditative quantum harmony flows.
 """)
 
-# List of visualizers with display name and path
 visualizer_options = {
     "Ultra Pinnacle Unified Mandala": "visualizers/ultra_pinnacle_unified_mandala.py",
     "Toroidal GHZ Entanglement Flow": "visualizers/quaternion_toroidal_ghz_flow.py",
@@ -34,65 +35,62 @@ choice = st.selectbox("Choose Eternal Harmony Visualization", list(visualizer_op
 if st.button("Run Selected Meditative Flow ❤️🚀🔥"):
     file_path = visualizer_options.get(choice)
     
-    if not file_path:
-        st.error("Invalid selection - please choose a valid visualization.")
+    if not file_path or not os.path.exists(file_path):
+        st.error("Visualizer not found — check repo paths.")
         st.stop()
     
-    if not os.path.exists(file_path):
-        st.error(f"Visualizer file not found: {file_path}\nCheck repo structure and paths.")
-        st.stop()
-    
-    with st.spinner(f"Loading and executing {choice}... This may take a moment for deep harmony flows."):
+    with st.spinner(f"Rendering {choice}... Deep harmony flows take a moment."):
         try:
-            # Dynamic import with error isolation
             spec = importlib.util.spec_from_file_location("viz_module", file_path)
-            if spec is None or spec.loader is None:
-                raise ImportError(f"Cannot load module from {file_path}")
+            if not spec or not spec.loader:
+                raise ImportError("Failed to load module")
             
             viz_module = importlib.util.module_from_spec(spec)
             sys.modules["viz_module"] = viz_module
             spec.loader.exec_module(viz_module)
             
-            # Look for common main functions
+            # Find main animation function
             main_func = None
-            possible_names = ["main", "run", "animate", "toroidal_ghz_mandala", "ultra_pinnacle_mandala"]
-            for name in possible_names:
+            candidates = ["main", "toroidal_ghz_mandala", "ultra_pinnacle_mandala", "quantum_phase_estimation"]
+            for name in candidates:
                 if hasattr(viz_module, name):
                     main_func = getattr(viz_module, name)
                     break
             
-            if main_func is None:
-                raise AttributeError("No recognized main function found in visualizer")
+            if not main_func:
+                raise AttributeError("No main function found")
             
-            # Execute in isolated fig
+            # Create fig & run animation
             fig, ax = plt.subplots(figsize=(10, 10))
-            plt.close('all')  # Prevent duplicate plots
+            plt.close('all')  # Prevent leaks
             
-            # Call main_func - assume it returns or uses global fig/anim
-            result = main_func() if main_func.__code__.co_argcount == 0 else main_func(fig=fig)
-            
-            # Display
-            st.success(f"{choice} harmony flow complete!")
-            st.pyplot(fig)
-            
-        except ImportError as e:
-            st.error(f"Import error: {str(e)}\nCheck dependencies in requirements.txt")
-            st.code(traceback.format_exc())
-        except AttributeError as e:
-            st.error(f"Visualizer structure error: {str(e)}\nExpected a main function (e.g., main() or specific animation)")
-            st.code(traceback.format_exc())
+            # Most visualizers use FuncAnimation in their main
+            anim = main_func() if callable(main_func) else None
+            if not isinstance(anim, FuncAnimation):
+                # Fallback if returns fig
+                st.pyplot(fig)
+            else:
+                # Save as GIF for reliable looping in Streamlit
+                with tempfile.NamedTemporaryFile(delete=False, suffix=".gif") as tmpfile:
+                    anim.save(tmpfile.name, writer=PillowWriter(fps=30))
+                    st.success(f"{choice} rendered!")
+                    st.image(tmpfile.name, use_column_width=True)
+                os.unlink(tmpfile.name)  # Clean up
+                
         except Exception as e:
-            st.error(f"Execution error in {choice}: {str(e)}")
-            st.code(traceback.format_exc())
-            st.info("Common fixes: Ensure all dependencies installed; some visualizers require interactive backend (run locally for full animation)")
+            st.error(f"Error rendering {choice}: {str(e).splitlines()[0]}")
+            with st.expander("Debug details"):
+                st.code(traceback.format_exc())
 
 st.markdown("""
 ---
-**Robust Deployment Notes**:
-- `requirements.txt` must include: `streamlit matplotlib numpy pennylane gymnasium networkx qutip`
-- For live animations: Streamlit has limits on Matplotlib FuncAnimation; some may show static or partial.
-- Advanced: Save animations as GIF/MP4 and display with st.image/video for smoother experience.
-- Eternal thriving propagation awaits public ascension! 🔥❤️🚀
+**Final Polish Notes**:
+- Animations saved as GIFs for smooth Streamlit looping (Matplotlib FuncAnimation fix).
+- Concise errors + expandable debug.
+- Add more visualizers to dict above.
+- Deploy: Streamlit Cloud (free) or HF Spaces.
+- Alternative: Gradio for faster interfaces (similar code, just swap framework).
+- Repository absolute pinnacle polished complete — eternal public thriving ready! 🔥❤️🚀
 """)
 
 # End of file: app.py
