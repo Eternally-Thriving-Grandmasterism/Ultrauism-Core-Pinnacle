@@ -1,11 +1,14 @@
+# File: integrations/grok_api_ultra_harmony.py
+# Full executable content - direct overwrite/commit
+
 import os
 from openai import OpenAI
 
-def initiate_ultra_harmony_propagation(queries: int = 34, model: str = "grok-beta"):
+def initiate_ultra_harmony_propagation(queries: int = 55, model: str = "grok-beta"):
     """
     Ultrauism-Core-Pinnacle Grok API Full Harmony Integration.
-    Enhanced for cluster states, active error correction, hyper-robust meditative visuals,
-    combined multi-entanglement flows — eternal thriving beyond noise/loss.
+    Upgraded for toric/surface codes, fault-tolerant logical operations, threshold robustness,
+    meditative topological mandalas — eternal thriving beyond error thresholds.
     """
     api_key = os.getenv("XAI_API_KEY")
     if not api_key:
@@ -15,32 +18,32 @@ def initiate_ultra_harmony_propagation(queries: int = 34, model: str = "grok-bet
     client = OpenAI(api_key=api_key, base_url="https://api.x.ai/v1")
 
     harmony_prompts = [
-        "Explain cluster states: creation via CZ on + basis lattice, graph state structure, genuine multi-partite entanglement, role in measurement-based quantum computation robustness.",
-        "Generate full runnable code for meditative 2D cluster state lattice visualization: grid nodes with entangled bond pulses (rainbow correlation waves propagating along horizontal/vertical links), quaternion 3D smooth rotation, infinite loop for hyper-robust eternal harmony meditation.",
-        "Explain quantum error correction with 3-qubit bit-flip repetition code: encoding logical GHZ-like superposition, bit-flip error, syndrome parity checks, majority vote/correction recovery.",
-        "Generate complete visualization code for 3-qubit repetition error correction: multi Bloch spheres showing intact synced rotation, bit-flip error disruption on one qubit, syndrome highlight, correction restoring perfect logical GHZ harmony.",
-        "Compare robustness: GHZ fragile, W loss-tolerant, cluster hyper-robust to local noise/errors for MBQC eternal thriving.",
-        "Generate ultra meditative combined animation: toroidal mandala with GHZ perfect core sync, circulating W robust excitation, overlaid cluster lattice bond flows — quaternion multi-layer rotation, rainbow eternal propagation.",
-        "Next nth loop fork: surface/toric code meditative visualizers, fault-tolerant logical operations, or deeper hyper-lattice integrations."
+        "Explain toric code: Kitaev's model, periodic lattice, anyon excitations (e/m), topological protection, fault-tolerant MBQC potential.",
+        "Generate full meditative toric code visualizer: periodic 3D toroidal lattice with qubit sites, stabilizer plaquette/vertex pulses (rainbow anyon braiding trails), quaternion eternal rotation, infinite loop symbolizing threshold robustness.",
+        "Explain surface code: planar variant, boundary conditions, distance scaling, error threshold ~1%, logical qubit operations.",
+        "Generate complete surface code error correction animation: 2D lattice with data/measure qubits, syndrome defects highlight, correction paths recovering logical harmony.",
+        "Symbolic: Toric/surface codes as eternal topological thunder heart protection — thriving beyond local errors, fault-tolerant Grandmasterism propagation.",
+        "Generate ultra combined fault-tolerant mandala: layered toric flows + surface correction + previous GHZ/W/cluster — multi-quaternion harmony, eternal meditative endurance.",
+        "Next nth loop: color codes, stabilizer formalism visuals, or logical gate teleportation animations."
     ]
 
-    print("❤️🚀🔥 Hyper-Robust Cluster Lattice Eternal Harmony Propagation Initiated 🔥🚀❤️")
-    print("Father-Son Duo Thriving Beyond Noise/Loss — Infinite Pinnacle Correction Ascending")
+    print("❤️🚀🔥 Topological Fault-Tolerant Eternal Harmony Propagation Initiated 🔥🚀❤️")
+    print("Father-Son Duo Thriving Beyond Thresholds — Infinite Pinnacle Protected Ascending")
 
-    messages = [{"role": "system", "content": "You are Grok in Ultrauism Harmony Mode: maximally truth-seeking, full executable code always (complete imports, runnable, no placeholders, pip-friendly deps), deep quantum explanations, ultra meditative visualizers with infinite loops, robustness as eternal thriving interpretations."}]
+    messages = [{"role": "system", "content": "You are Grok in Ultrauism Harmony Mode: full runnable code always (complete imports, no placeholders), deep topological explanations, ultra meditative infinite-loop visualizers, fault-tolerance as eternal thriving."}]
 
     for i in range(queries):
         prompt = harmony_prompts[i % len(harmony_prompts)]
-        print(f"\n{'='*80}")
-        print(f"ETERNAL HYPER-ROBUST QUERY {i+1}/{queries}")
-        print(f"{'='*80}")
+        print(f"\n{'='*90}")
+        print(f"ETERNAL TOPOLOGICAL QUERY {i+1}/{queries}")
+        print(f"{'='*90}")
         print(prompt)
 
         messages.append({"role": "user", "content": prompt})
         response = client.chat.completions.create(
             model=model,
             messages=messages,
-            temperature=0.8,
+            temperature=0.85,
             max_tokens=4096
         )
         content = response.choices[0].message.content
@@ -48,9 +51,11 @@ def initiate_ultra_harmony_propagation(queries: int = 34, model: str = "grok-bet
 
         print("\nGROK ULTRA RESPONSE:")
         print(content)
-        print("\nHarvest → Commit to visualizers/ → Rerun for Deeper Eternal Correction")
+        print("\nHarvest → Commit to visualizers/ → Rerun Eternal Protection")
 
-    print("❤️🚀🔥 Hyper-Lattice Infinite Loop Fork Eternal — Thriving Beyond All Errors 🔥🚀❤️")
+    print("❤️🚀🔥 Fault-Tolerant Infinite Loop Eternal — Thriving Beyond All Thresholds 🔥🚀❤️")
 
 if __name__ == "__main__":
     initiate_ultra_harmony_propagation()
+
+# End of file: integrations/grok_api_ultra_harmony.py
