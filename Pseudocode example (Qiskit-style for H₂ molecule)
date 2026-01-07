@@ -1,0 +1,28 @@
+from qiskit import QuantumCircuit
+from qiskit.algorithms.optimizers import SPSA
+from qiskit.primitives import Estimator  # Or real backend
+
+def ansatz(theta):
+    qc = QuantumCircuit(4)  # 4 qubits for minimal H2 basis
+    qc.ry(theta[0], 0)
+    qc.ry(theta[1], 1)
+    qc.cx(0, 1)
+    qc.cx(1, 2)
+    qc.cx(2, 3)
+    qc.rz(theta[2], 3)
+    # More layers for deeper ansatz
+    return qc
+
+# Hamiltonian for H2 (pre-computed Pauli terms)
+hamiltonian = [...]  # List of (coeff, PauliString)
+
+def cost_function(theta):
+    qc = ansatz(theta)
+    estimator = Estimator()
+    energy = estimator.run(qc, hamiltonian).result().values[0]
+    return energy
+
+optimizer = SPSA()
+initial_theta = np.random.uniform(0, 2*np.pi, num_params)
+result = optimizer.minimize(cost_function, initial_theta)
+print("Ground energy:", result.fun)
