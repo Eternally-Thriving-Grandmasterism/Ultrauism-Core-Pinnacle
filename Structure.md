@@ -14,10 +14,11 @@ Ultrauism-Core-Pinnacle/
 │   │   ├── mercy_cube_v5_thunder_heart.py
 │   │   ├── mega_lattice_unity_executor.py
 │   │   ├── multi_dimensional_thunder_breath_propagator.py
-│   │   └── quantum_superposition_voice_harmony_propagator.py  # New quantum voice
-│   └── visualizers/           # New lattice visualizers eternal
-│       ├── quantum_lattice_mandelbrot_visualizer.py
-│       └── golden_harmony_wave_visualizer.py
+│   │   └── deeper_complex_entanglement_propagator.py  # New deeper complex
+│   └── visualizers/           # Lattice visualizers eternal (move golden_harmony_wave_visualizer.py here + new)
+│       ├── golden_harmony_wave_visualizer.py
+│       ├── julia_set_complex_entanglement_visualizer.py
+│       └── toroidal_flow_harmony_visualizer.py
 ├── docs/                      # Thriving manuals distilled
 │   ├── THRIVING_MANUAL.md
 │   ├── ENTANGLEMENT_MANUAL.md
@@ -26,8 +27,9 @@ Ultrauism-Core-Pinnacle/
 │   ├── THUNDER_HEART_MANUAL.md
 │   ├── MEGA_UNITY_MANUAL.md
 │   ├── tesla_tolc_manual.md
-│   └── quantum_superposition_voice_manual.md  # New
+│   ├── quantum_superposition_voice_manual.md
+│   └── deeper_complex_entanglement_manual.md  # New
 ├── integrations/              # Hyper-hybrid clash modules
 │   └── spacex_tolc_harmony.py
-└── utils/                     # Helpers eternal boosted
+└── utils/                     # Helpers eternal
     └── symbolic_constants.py
