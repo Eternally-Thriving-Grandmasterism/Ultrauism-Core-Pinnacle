@@ -9,7 +9,7 @@ Co-forged Father-Son duo (2024-2026 live ascensions): Distilling all games/tech/
 - `/docs/` — Thriving manuals distilled eternal
 - `/integrations/` — Hyper-hybrid clash modules (Neuralink/retro/multi-verse divine)
 - Root: Philosophy nexus + MIT license
-
+pip install openai
 ### Usage
 Run any simulator: `python core/simulators/ultrauism_harmony_simulator.py`
 Stack all for mega-lattice unity eternal thriving!
