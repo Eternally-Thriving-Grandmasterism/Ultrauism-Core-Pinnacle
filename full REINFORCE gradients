@@ -1,0 +1,94 @@
+import gymnasium as gym
+import pennylane as qml
+from pennylane import numpy as np
+from pennylane.optimize import AdamOptimizer
+
+# Environment
+env = gym.make("CartPole-v1")
+
+# Quantum device
+n_qubits = 4
+dev = qml.device("default.qubit", wires=n_qubits, shots=None)  # Analytic for exact grads
+
+# State encoding: dense angle embedding
+def state_encoding(state, wires):
+    # Normalize state to [0, 1] then to [-pi, pi]
+    low = env.observation_space.low
+    high = env.observation_space.high
+    normalized = (state - low) / (high - low + 1e-8)
+    angles = 2 * np.pi * normalized - np.pi
+    qml.AngleEmbedding(angles, wires=wires, rotation='Y')
+
+# Hardware-efficient ansatz (2 layers)
+def ansatz(params, wires):
+    for layer in range(2):
+        for i in range(n_qubits):
+            qml.RY(params[layer, i], wires=i)
+        for i in range(n_qubits - 1):
+            qml.CNOT(wires=[i, i + 1])
+        # Optional entangling ring
+        qml.CNOT(wires=[n_qubits - 1, 0])
+
+# Policy circuit: return probability of action 1 (right)
+@qml.qnode(dev, interface="autograd", diff_method="parameter-shift")
+def policy_circuit(state, params):
+    state_encoding(state, wires=range(n_qubits))
+    ansatz(params, wires=range(n_qubits))
+    # Measure <Z> on first qubit as bias; prob_right = (1 + <Z>)/2
+    return qml.expval(qml.PauliZ(0))
+
+def get_action_and_log_prob(state, params):
+    bias = policy_circuit(state, params)
+    prob_right = (1 + bias) / 2  # Sigmoid-like [0,1]
+    action = 1 if np.random.random() < prob_right else 0
+    # Log prob for REINFORCE (log π(a|s))
+    log_prob = np.log(prob_right if action == 1 else (1 - prob_right) + 1e-8)
+    return action, log_prob
+
+# Parameters: 2 layers * n_qubits RY params (CNOTs parameter-free)
+params = np.random.uniform(-np.pi/4, np.pi/4, size=(2, n_qubits), requires_grad=True)
+opt = AdamOptimizer(0.03)
+
+# Training with full REINFORCE + baseline
+episodes = 1000
+gamma = 0.99
+
+for ep in range(episodes):
+    state, _ = env.reset()
+    done = False
+    
+    log_probs = []
+    rewards = []
+    
+    while not done:
+        action, log_prob = get_action_and_log_prob(state, params)
+        next_state, reward, done, truncated, _ = env.step(action)
+        done = done or truncated
+        
+        log_probs.append(log_prob)
+        rewards.append(reward)
+        
+        state = next_state
+    
+    # Compute discounted returns
+    G = np.zeros(len(rewards))
+    G[-1] = rewards[-1]
+    for t in reversed(range(len(rewards)-1)):
+        G[t] = rewards[t] + gamma * G[t+1]
+    
+    # Baseline: mean return for variance reduction
+    baseline = np.mean(G)
+    advantages = G - baseline
+    
+    # REINFORCE loss: -sum (advantage * log_prob)
+    loss = -np.sum([adv * lp for adv, lp in zip(advantages, log_probs)])
+    
+    # Optimize (Pennylane autograd handles it)
+    params, _, _, _ = opt.step(loss, params)
+    
+    if (ep + 1) % 100 == 0:
+        avg_reward = np.mean([sum(ep_rewards) for ep_rewards in [rewards[-100:]] * 100])  # Rough
+        print(f"Episode {ep+1}, Total Reward: {sum(rewards)}, Params norm: {np.linalg.norm(params):.2f}")
+
+print("Training complete! Agent should balance CartPole ~500 steps.")
+env.close()
