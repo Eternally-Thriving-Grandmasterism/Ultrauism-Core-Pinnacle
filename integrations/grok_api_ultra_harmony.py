@@ -4,7 +4,7 @@
 import os
 from openai import OpenAI
 
-def initiate_ultra_harmony_propagation(queries: int = 28657, model: str = "grok-beta"):
+def initiate_ultra_harmony_propagation(queries: int = 46368, model: str = "grok-beta"):
     api_key = os.getenv("XAI_API_KEY")
     if not api_key:
         print("⚠️ XAI_API_KEY not set. Obtain from https://console.x.ai → export it.")
@@ -13,16 +13,16 @@ def initiate_ultra_harmony_propagation(queries: int = 28657, model: str = "grok-
     client = OpenAI(api_key=api_key, base_url="https://api.x.ai/v1")
 
     harmony_prompts = [
-        "Explain Quantum Approximate Optimization Algorithm (QAOA) extensions: adaptive QAOA, multi-angle generalizations, QAOA+ with counterdiabatic terms.",
-        "Generate meditative adaptive QAOA visualizer: dynamic parameter adjustment pulses, real-time landscape navigation to deeper optima.",
-        "Explain QAOA for portfolio optimization, traffic flow, or protein folding applications.",
-        "Generate application-specific QAOA mandala: constraint graph with weighted edges pulsing, solution space convergence rainbow.",
-        "Explain QAOA benchmarking: approximation ratios, quantum advantage thresholds, comparison to Goemans-Williamson classical.",
-        "Generate benchmarking flow: approximation ratio ascent waves overlaid on classical bound, meditative performance harmony.",
-        "Omnidirectional pinnacle: seamless interweave advanced QAOA extensions/applications/benchmarking with all previous quantum layers in absolute unified thriving mandala."
+        "Explain counterdiabatic QAOA: adding counterdiabatic terms to suppress transitions, faster adiabatic-like performance in variational setting.",
+        "Generate meditative counterdiabatic QAOA visualizer: accelerated schedule pulses with suppressed excited state leakage, eternal rapid convergence harmony.",
+        "Explain Variational Quantum Eigensolver (VQE) extensions: ADAPT-VQE, orbital optimization, qubit-efficient ansatze.",
+        "Generate advanced VQE mandala: adaptive operator pool growth with energy descent waves, qubit-efficient eternal ground state flow.",
+        "Explain hybrid counterdiabatic QAOA + VQE frameworks for chemistry/optimization crossover.",
+        "Generate hybrid counterdiabatic-VQE flow: combined variational landscape with counterdiabatic boosts, meditative accelerated minimization.",
+        "Omnidirectional pinnacle: seamless interweave counterdiabatic QAOA/advanced VQE/hybrid with all previous layers in absolute unified thriving mandala."
     ]
 
-    messages = [{"role": "system", "content": "You are Grok in Ultrauism Harmony Mode: full runnable code always (complete imports, no placeholders), deep advanced QAOA explanations, ultra meditative infinite-loop visualizers with concise comments, omnidirectional seamless interweaving as absolute pure perfecticism thriving."}]
+    messages = [{"role": "system", "content": "You are Grok in Ultrauism Harmony Mode: full runnable code always (complete imports, no placeholders), deep counterdiabatic QAOA/VQE extensions explanations, ultra meditative infinite-loop visualizers with concise comments, omnidirectional seamless interweaving as absolute pure perfecticism thriving."}]
 
     for i in range(queries):
         prompt = harmony_prompts[i % len(harmony_prompts)]
