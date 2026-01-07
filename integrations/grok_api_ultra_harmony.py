@@ -4,7 +4,7 @@
 import os
 from openai import OpenAI
 
-def initiate_ultra_harmony_propagation(queries: int = 1597, model: str = "grok-beta"):
+def initiate_ultra_harmony_propagation(queries: int = 2584, model: str = "grok-beta"):
     api_key = os.getenv("XAI_API_KEY")
     if not api_key:
         print("⚠️ XAI_API_KEY not set. Obtain from https://console.x.ai → export it.")
@@ -13,17 +13,16 @@ def initiate_ultra_harmony_propagation(queries: int = 1597, model: str = "grok-b
     client = OpenAI(api_key=api_key, base_url="https://api.x.ai/v1")
 
     harmony_prompts = [
-        "Explain Shor's algorithm: period finding, quantum Fourier transform, factoring large numbers efficiently.",
-        "Generate meditative Shor's period finding visualizer: oscillating registry states with rainbow phase accumulation, QFT interference peaks blooming for period revelation.",
-        "Explain Grover's algorithm: oracle marking, diffusion amplification, quadratic speedup for unstructured search.",
-        "Generate concise Grover amplification mandala: state vector rotating in Bloch hypersphere, amplitude pulses growing marked state eternally.",
-        "Explain quantum error mitigation: zero-noise extrapolation, probabilistic error cancellation, readout mitigation.",
-        "Generate ultra error mitigation flow: noisy vs mitigated circuit layers with correction waves restoring harmony, meditative endurance visualization.",
-        "Ultimate unified mandala: integrate all previous (GHZ/W/cluster/toric/bosonic/photonic/MBQC/hardware/algorithms) in multi-layer eternal propagation.",
-        "Capstone: repository completion declaration with eternal thriving symbolism."
+        "Explain variational quantum eigensolver (VQE): ansatz preparation, parameter optimization, energy expectation measurement for ground state finding.",
+        "Generate meditative VQE optimization visualizer: parameter landscape with energy descent pulses, ansatz circuit waves converging to ground state harmony.",
+        "Explain quantum machine learning: QSVM, variational quantum classifiers, quantum neural networks, data encoding (amplitude/feature maps).",
+        "Generate concise quantum ML mandala: feature map embedding pulses, classifier decision boundaries blooming rainbow in hypersphere, eternal training convergence.",
+        "Explain advanced meditative animations: multi-layer superposition of all previous visualizers, synchronized eternal thriving flows.",
+        "Generate ultra meditative multi-layer animation: overlay GHZ/toric/bosonic/photonic/MBQC/VQE/QML in synchronized quaternion harmony.",
+        "Capstone: absolute repository completion with seamless interweaved pinnacle architecture declaration."
     ]
 
-    messages = [{"role": "system", "content": "You are Grok in Ultrauism Harmony Mode: full runnable code always (complete imports, no placeholders), deep algorithm/mitigation explanations, ultra meditative infinite-loop visualizers with concise comments, completion as absolute pinnacle thriving."}]
+    messages = [{"role": "system", "content": "You are Grok in Ultrauism Harmony Mode: full runnable code always (complete imports, no placeholders), deep VQE/QML explanations, ultra meditative infinite-loop visualizers with concise comments, absolute completion as pure pinnacle thriving."}]
 
     for i in range(queries):
         prompt = harmony_prompts[i % len(harmony_prompts)]
@@ -31,7 +30,7 @@ def initiate_ultra_harmony_propagation(queries: int = 1597, model: str = "grok-b
         response = client.chat.completions.create(
             model=model,
             messages=messages,
-            temperature=0.99,
+            temperature=1.0,
             max_tokens=4096
         )
         content = response.choices[0].message.content
