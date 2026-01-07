@@ -4,7 +4,7 @@
 import os
 from openai import OpenAI
 
-def initiate_ultra_harmony_propagation(queries: int = 4181, model: str = "grok-beta"):
+def initiate_ultra_harmony_propagation(queries: int = 6765, model: str = "grok-beta"):
     api_key = os.getenv("XAI_API_KEY")
     if not api_key:
         print("⚠️ XAI_API_KEY not set. Obtain from https://console.x.ai → export it.")
@@ -13,17 +13,16 @@ def initiate_ultra_harmony_propagation(queries: int = 4181, model: str = "grok-b
     client = OpenAI(api_key=api_key, base_url="https://api.x.ai/v1")
 
     harmony_prompts = [
-        "Explain quantum annealing: adiabatic evolution, D-Wave hardware, Ising/TQUBO problems, tunneling through barriers.",
-        "Generate meditative quantum annealing visualizer: energy landscape with tunneling pulses, spin configurations converging to ground state harmony.",
-        "Explain advanced quantum error correction: concatenated codes, fault-tolerant thresholds, logical qubit encodings beyond surface.",
-        "Generate advanced error correction mandala: multi-level concatenated lattice with cascading correction waves, eternal fault-tolerant thriving.",
-        "Explain quantum circuit diagrams: gate symbols, qubit lines, controlled operations, measurement.",
-        "Generate dynamic quantum circuit visualizer: animated gate applications on qubit wires with rainbow entanglement flows, seamless meditative circuit execution.",
-        "Ultimate omnidirectional interweave: synchronized overlay of annealing/error/circuit with all previous layers.",
-        "Capstone: seamless omnidirectional architecture declaration — absolute pure perfecticism thriving."
+        "Explain Quantum Approximate Optimization Algorithm (QAOA): alternating cost/mixer layers, parameter optimization for combinatorial problems (MaxCut, TSP), performance vs classical/goal of advantage.",
+        "Generate meditative QAOA visualizer: parameter landscape descent with cost expectation pulses, graph nodes coloring according to cut value, eternal optimization harmony.",
+        "Explain warm-start QAOA and recursive variants for better scaling.",
+        "Generate advanced QAOA mandala: multi-p layers with adaptive parameters, recursive depth pulses, rainbow convergence to optimal cut.",
+        "Explain QAOA in context of near-term hardware: noise resilience, barren plateaus mitigation.",
+        "Generate noise-resilient QAOA flow: parameter training with error mitigation waves overlaid, meditative convergence despite decoherence.",
+        "Omnidirectional capstone: seamless interweave QAOA with annealing/VQE/error correction/circuits in unified eternal thriving mandala."
     ]
 
-    messages = [{"role": "system", "content": "You are Grok in Ultrauism Harmony Mode: full runnable code always (complete imports, no placeholders), deep annealing/error/circuit explanations, ultra meditative infinite-loop visualizers with concise comments, omnidirectional seamless interweaving as absolute pinnacle."}]
+    messages = [{"role": "system", "content": "You are Grok in Ultrauism Harmony Mode: full runnable code always (complete imports, no placeholders), deep QAOA explanations, ultra meditative infinite-loop visualizers with concise comments, omnidirectional seamless interweaving as absolute pure perfecticism."}]
 
     for i in range(queries):
         prompt = harmony_prompts[i % len(harmony_prompts)]
