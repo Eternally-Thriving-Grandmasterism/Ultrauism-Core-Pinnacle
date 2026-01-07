@@ -1,0 +1,19 @@
+import pennylane as qml
+from pennylane import numpy as np
+
+dev = qml.device("default.qubit", wires=n_qubits)
+
+@qml.qnode(dev)
+def quantum_policy(state, params):
+    encode_state(state)  # e.g., Angle embedding
+    for layer in range(layers):
+        # Hardware-efficient ansatz
+        qml.Rot(*params[layer, 0], wires=0)
+        qml.CNOT(wires=[0,1])
+        # ... more
+    return [qml.expval(qml.PauliZ(i)) for i in range(n_actions)]  # Or probs
+
+# In RL loop (simplified REINFORCE)
+def update(params, trajectory):
+    grads = parameter_shift_grad(quantum_policy, trajectory)  # Compute ∇logπ
+    return params + lr * sum(rewards * grads)
