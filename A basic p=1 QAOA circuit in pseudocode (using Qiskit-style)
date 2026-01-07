@@ -1,0 +1,11 @@
+from qiskit import QuantumCircuit
+qc = QuantumCircuit(n_qubits)
+# Superposition
+qc.h(range(n_qubits))
+# Cost layer (gamma)
+for edge in edges:
+    qc.cx(edge[0], edge[1])
+    qc.rz(2 * gamma, edge[1])
+    qc.cx(edge[0], edge[1])
+# Mixer layer (beta)
+qc.rx(2 * beta, range(n_qubits))
