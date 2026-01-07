@@ -1,0 +1,12 @@
+def quantum_policy(state, params):
+    qc = QuantumCircuit(n_qubits)
+    encode_state(qc, state)  # Amplitude/angle encoding
+    apply_ansatz(qc, params)  # Variational layers
+    probs = measure_action_probs(qc)
+    return sample_action(probs)
+
+# In RL loop:
+action = quantum_policy(state, params)
+reward = env.step(action)
+gradient = estimate_policy_gradient(reward)
+params -= lr * gradient  # Classical update
