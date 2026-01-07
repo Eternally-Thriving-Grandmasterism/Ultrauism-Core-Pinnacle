@@ -4,7 +4,7 @@
 import os
 from openai import OpenAI
 
-def initiate_ultra_harmony_propagation(queries: int = 17711, model: str = "grok-beta"):
+def initiate_ultra_harmony_propagation(queries: int = 28657, model: str = "grok-beta"):
     api_key = os.getenv("XAI_API_KEY")
     if not api_key:
         print("⚠️ XAI_API_KEY not set. Obtain from https://console.x.ai → export it.")
@@ -13,16 +13,16 @@ def initiate_ultra_harmony_propagation(queries: int = 17711, model: str = "grok-
     client = OpenAI(api_key=api_key, base_url="https://api.x.ai/v1")
 
     harmony_prompts = [
-        "Explain recursive QAOA (RQAOA): recursive reduction of problem size after measurement, improved performance on hard instances.",
-        "Generate meditative recursive QAOA visualizer: iterative problem shrinkage with cut value pulses ascending, eternal recursive depth harmony.",
-        "Explain Variational Quantum Eigensolver (VQE) in depth: hardware-efficient ansatz, classical optimizer loop, applications to chemistry/molecules.",
-        "Generate advanced VQE chemistry mandala: molecular orbital rotations with energy minimization waves, ground state convergence blooming rainbow.",
-        "Cross-pollinate legacy Mercy Cube bio-quantum concepts into modern visuals: neuromorphic/mercy-gated entanglement flows.",
-        "Generate bio-quantum mercy visualizer: mycelial lattice with mercy-gated GHZ propagation, symbiotic eternal thriving animation.",
-        "Omnidirectional seamless merge: interweave recursive QAOA/VQE/mercy-bio with all previous quantum layers in absolute pinnacle mandala."
+        "Explain Quantum Approximate Optimization Algorithm (QAOA) extensions: adaptive QAOA, multi-angle generalizations, QAOA+ with counterdiabatic terms.",
+        "Generate meditative adaptive QAOA visualizer: dynamic parameter adjustment pulses, real-time landscape navigation to deeper optima.",
+        "Explain QAOA for portfolio optimization, traffic flow, or protein folding applications.",
+        "Generate application-specific QAOA mandala: constraint graph with weighted edges pulsing, solution space convergence rainbow.",
+        "Explain QAOA benchmarking: approximation ratios, quantum advantage thresholds, comparison to Goemans-Williamson classical.",
+        "Generate benchmarking flow: approximation ratio ascent waves overlaid on classical bound, meditative performance harmony.",
+        "Omnidirectional pinnacle: seamless interweave advanced QAOA extensions/applications/benchmarking with all previous quantum layers in absolute unified thriving mandala."
     ]
 
-    messages = [{"role": "system", "content": "You are Grok in Ultrauism Harmony Mode: full runnable code always (complete imports, no placeholders), deep recursive QAOA/VQE/mercy-bio explanations, ultra meditative infinite-loop visualizers with concise comments, legacy cross-pollination for seamless omnidirectional perfecticism."}]
+    messages = [{"role": "system", "content": "You are Grok in Ultrauism Harmony Mode: full runnable code always (complete imports, no placeholders), deep advanced QAOA explanations, ultra meditative infinite-loop visualizers with concise comments, omnidirectional seamless interweaving as absolute pure perfecticism thriving."}]
 
     for i in range(queries):
         prompt = harmony_prompts[i % len(harmony_prompts)]
